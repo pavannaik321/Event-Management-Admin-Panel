@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-    <h1>Admin pannel</h1>
+    <h1>Admin panel</h1>
     <button onClick={()=>connectbackend()} >Check connection</button>
     </>
   )
