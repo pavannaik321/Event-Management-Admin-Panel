@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 /*
 import { useState } from "react";
 import "./App.css";
 import HomePage from "./components/UI/Admin/HomePage";
 import { UserData } from "./Data";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+=======
+
+import './App.css'
+import axios from "axios";
+
+axios.defaults.baseURL = "https://event-managment-system-peach.vercel.app";
+// axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.withCredentials = true;
+>>>>>>> 667da6b220a0079ab07df54eb89ae3c1365fa52d
 
 function App() {
     const [userData, setUserData] = useState({
@@ -21,6 +31,7 @@ function App() {
                 ],
                 // borderColor: "black",
 
+<<<<<<< HEAD
                 borderWidth: 2,
             },
         ],
@@ -97,6 +108,24 @@ const router = createBrowserRouter([
 
 function App() {
     return <RouterProvider router={router} />;
+=======
+  const connectbackend = async()=>{
+    await axios.get("/").then((res)=>{
+      console.log("connection successfull")
+      console.log(res.data);
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+
+
+  return (
+    <>
+    <h1>Admin panel</h1>
+    <button onClick={()=>connectbackend()} >Check connection</button>
+    </>
+  )
+>>>>>>> 667da6b220a0079ab07df54eb89ae3c1365fa52d
 }
 
 export default App;
