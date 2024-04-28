@@ -1,0 +1,45 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin: 0 auto;
+}
+
+.form p {
+    margin-bottom: 10px;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.errors {
+    color: red;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+}
+
+.actions button[disabled] {
+    background-color: #ddd;
+    cursor: default;
+}
