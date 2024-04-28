@@ -1,19 +1,13 @@
-import {
-    Form,
-    useNavigate,
-    useActionData,
-    json,
-    redirect,
-} from "react-router-dom";
+import { Form, useNavigate, useActionData } from "react-router-dom";
 import axios from "axios";
-import classes from "./SignUp.module.css"; // Update class name
+import classes from "./SignUp.module.css";
 import { useEffect } from "react";
 
 function SignUp() {
     const data = useActionData();
     const navigate = useNavigate();
 
-    const isSubmitting = data?.errors; // Check for errors in data
+    const isSubmitting = data?.errors;
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -31,30 +25,24 @@ function SignUp() {
             password: password,
             venderoffice: office,
         };
-        // Handle form submission logic here (e.g., call API to create user)
 
-        const response = await axios({
-            method: "post",
-            url: "http://localhost:8000/admin/register",
-            data: userData,
-            header: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => {
-                console.log(res);
+        try {
+            await axios ({
+                method:"post",
+                url:"/admin/register",
+                data:userData,
+                header:{
+                    "Content-Type":"application/json"}
+            }).then((res)=>{
+                console.log(res)
+            }).catch((err)=>{
+                console.log(err)
             })
-            .catch((err) => {
-                console.log(err);
-            });
-
-        if (!response.ok) {
-            throw json({ message: "Could not signup." }, { status: 500 });
+            console.log("success")
+            navigate("/events");
+        } catch (error) {
+            console.error("Error occurred while signing up:", error.message);
         }
-        console.log("success");
-        navigate("/events");
-
-        // For demonstration purposes, redirect after a simulated delay
     };
 
     return (
@@ -96,42 +84,3 @@ function SignUp() {
 }
 
 export default SignUp;
-
-// Update action function if needed for signup logic
-export async function action({ request, params }) {
-    const method = request.method;
-    const data = await request.formData();
-
-    const userData = {
-        vendorname: data.get("vendorName"),
-        email: data.get("email"),
-        phone: +data.get("mobile"),
-        password: data.get("password"),
-        venderoffice: data.get("vendorOffice"),
-    };
-    console.log(userData);
-    let url = "http://localhost:8000/admin/register";
-
-    // if (method === "PATCH") {
-    //     const eventId = params.eventId;
-    //     url = "http://localhost:8080/events/" + eventId;
-    // }
-
-    const response = await fetch(url, {
-        method: method,
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-    });
-
-    if (response.status === 422) {
-        return response;
-    }
-
-    if (!response.ok) {
-        throw json({ message: "Could not signup." }, { status: 500 });
-    }
-
-    return redirect("/events");
-}

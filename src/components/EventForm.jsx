@@ -30,11 +30,21 @@ function EventForm({ method, event }) {
                 </ul>
             )}
             <p>
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Venue Title</label>
                 <input
                     id="title"
                     type="text"
                     name="title"
+                    required
+                    defaultValue={event ? event.title : ""}
+                />
+            </p>
+            <p>
+                <label htmlFor="location">Location</label>
+                <input
+                    id="location"
+                    type="text"
+                    name="location"
                     required
                     defaultValue={event ? event.title : ""}
                 />
@@ -45,21 +55,31 @@ function EventForm({ method, event }) {
                     id="image"
                     type="url"
                     name="image"
-                    required
+                
                     defaultValue={event ? event.image : ""}
                 />
             </p>
             <p>
-                <label htmlFor="date">Date</label>
+                <label htmlFor="price">Price</label>
                 <input
-                    id="date"
-                    type="date"
-                    name="date"
+                    id="price"
+                    type="number"
+                    name="price"
                     required
-                    defaultValue={event ? event.date : ""}
+                    defaultValue={event ? event.price : ""}
                 />
             </p>
             <p>
+                <label htmlFor="price">Capacity</label>
+                <input
+                    id="capacity"
+                    type="number"
+                    name="capacity"
+                    required
+                    defaultValue={event ? event.capacity : ""}
+                />
+            </p>
+             <p>
                 <label htmlFor="description">Description</label>
                 <textarea
                     id="description"
@@ -92,18 +112,22 @@ export async function action({ request, params }) {
     const data = await request.formData();
 
     const eventData = {
-        title: data.get("title"),
-        image: data.get("image"),
-        date: data.get("date"),
+        venueName: data.get("title"),
+        location:data.get("location"),
+        capacity: +data.get("capacity"),
         description: data.get("description"),
+        price:+data.get("price"),
+        image:data.get("image"),
+        // image: data.get("description"),
+
     };
 
-    let url = "http://localhost:8080/events";
+    let url = "http://localhost:8000/admin/addVenue";
 
-    if (method === "PATCH") {
-        const eventId = params.eventId;
-        url = "http://localhost:8080/events/" + eventId;
-    }
+    // if (method === "PATCH") {
+    //     const eventId = params.eventId;
+    //     url = "http://localhost:8080/events/" + eventId;
+    // }
 
     const response = await fetch(url, {
         method: method,
